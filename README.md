@@ -20,6 +20,12 @@ A list of certificates sorted by nearest expiration date is then printed, as wel
 ## Todolist
 
 * providing a filtering mechanism to only display certificates with less than X days before expiry
-* support machine certificates for SSL
+* support machine certificates for SSL (when there's no SNI)
 * may be offer a JSON output instead of a tabular one
+* may be provide a way to put parameters in the data file syntax
 * may be provide the builtin feature to display certificates (but it's so much better with OpenSSL)
+
+## References
+
+* cryptography Python module [documentation for handling X509 certificates](https://cryptography.io/en/latest/x509/)
+* [badssl.com](https://badssl.com) website for testing live X509 certificates
