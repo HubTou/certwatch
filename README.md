@@ -11,7 +11,7 @@ pip install pytnix
 # CERTWATCH(1)
 
 ## NAME
-certwatch - watch certificates expiration dates
+certwatch - watch X509 certificates expiration dates
 
 ## SYNOPSIS
 **certwatch**
@@ -31,30 +31,30 @@ certwatch - watch certificates expiration dates
 file [file...]
 
 ## DESCRIPTION
-The **certwatch** utility monitors X509 certificates expiration dates
+The **certwatch** utility monitors [X509 certificates](https://en.wikipedia.org/wiki/X.509) expiration dates
 by processing one or more data files containing lists of hostnames with optional port numbers.
 
-It's mainly used to check the expiration date of HTTPS certificates (which is the default target when the port number is not indicated),
-but the tool is protocol-agnostic and can "talk" to any SSL/TLS server (smtps, imaps, ldaps, etc.) without making too much assumptions
-on the correctness of servers certificates.
+It's mainly used to check the expiration date of [HTTPS](https://en.wikipedia.org/wiki/HTTPS) certificates (which is the default target when the port number is not indicated),
+but the tool is protocol-agnostic and can "talk" to any SNI-aware ([Server Name Information](https://en.wikipedia.org/wiki/Server_Name_Indication)) [SSL/TLS](https://en.wikipedia.org/wiki/Transport_Layer_Security) server (smtps, imaps, ldaps, etc.)
+without making too much assumptions on the correctness of servers certificates.
 
-The certificates can be saved to a specified directory with the *--savedir|-s* option for further analysis with other tools.
+The certificates can be saved to a specified directory with the *--savedir|-s* option for further analysis with other tools (such as [OpenSSL](https://www.openssl.org/)).
 
 As it's intended to bulk process a lot of certificates, a progress bar is displayed (can be removed with the *--noprogress|-b* option)
 and the time allowed to get a certificate is limited to a 10 seconds timeout (can be specified otherwise with the *--timeout|-t* option).
 
-In order to avoid doing a Denial of Service attack on servers hosting many certificates, a 1 second delay is waited between each certificate request 
+In order to avoid doing a [Denial of Service attack](https://en.wikipedia.org/wiki/Denial-of-service_attack) on servers hosting many certificates, a 1 second delay is waited between each certificate request 
 (can be specified otherwise with the *--delay|-d* option).
 
 The tool results are presented as text tables.
 
 The main one is the list of certificates successfully fetched, ordered by expiration date.
-This list can be filtered with the *--filter|-f* option to only show certificates expiring in the specified number of days.
+This list can be filtered with the *--filter|-f* option to only show certificates expired or expiring within the specified number of days.
 You can use the *--noaltnames|-a* option in order to stop displaying alternate names contained in certificates,
 or the *--ip|-i* option to include the IP addresses of servers.
 
 The second table is the sorted list of hostnames / hostports where certificates couldn't be fetched,
-with several attempts to identify the reason why.
+with our best attempts to identify the reason why.
 
 Two additional tables can be generated with the *--new|-n* option, in order to print the common names and alternate names
 unmentioned in your input data files.
@@ -82,7 +82,15 @@ Options | Use
 The CERTWATCH_DEBUG environment variable can be set to any value to enable debug mode.
 
 ## FILES
-/usr/local/share/certwatch/tests.txt - config file example
+/usr/local/share/certwatch/tests.txt - config file example using the [badssl.com](https://badssl.com) Web site for testing live bogus X509 certificates
+
+The structure of configuration files is as follows:
+* Everything after a '#' character is a comment
+* Blank lines are allowed
+* data lines are either:
+  * "hostname hostport"
+  * "hostname"
+* When hostport is not provided, port 443 (HTTPS) is assumed
 
 ## EXIT STATUS
 The **certwatch** utility exits 0 on success, and >0 if an error occurs.
@@ -132,4 +140,4 @@ However it should work through reverse proxies on the server side.
 ## SECURITY CONSIDERATIONS
 When certificate retrieval is unsuccessful, **certwatch** will try to diagnose the issue in different ways, one of which involving
 running the system **ping** command. This can be an issue if someone happens to place a command with the same name higher in your PATH.
-But working at the IP layer level, which is needed in order to implement the ICMP protocol, requires root privileges which I see as a bigger risk...
+But working at the IP layer level, which is needed in order to implement the [ICMP](https://en.wikipedia.org/wiki/Internet_Control_Message_Protocol) protocol, requires root privileges which I see as a bigger risk...
