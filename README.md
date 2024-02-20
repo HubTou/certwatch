@@ -134,7 +134,7 @@ It is available under the [3-clause BSD license](https://opensource.org/licenses
 [Hubert Tournier](https://github.com/HubTou)
 
 ## CAVEATS
-Using this command through outgoing proxies is untested and there is no option to set the proxy address.
+Using this command through outgoing proxies is untested and we provide no option to set the proxy address.
 However it should work through reverse proxies on the server side.
 
 ## SECURITY CONSIDERATIONS
