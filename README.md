@@ -82,7 +82,7 @@ Options | Use
 The CERTWATCH_DEBUG environment variable can be set to any value to enable debug mode.
 
 ## FILES
-/usr/local/share/certwatch/tests.txt - config file example using the [badssl.com](https://badssl.com) Web site for testing live bogus X509 certificates
+[/usr/local/share/certwatch/tests.txt](https://github.com/HubTou/certwatch/blob/main/data/tests.txt) - config file example using the [badssl.com](https://badssl.com) Web site for testing live bogus X509 certificates
 
 The structure of configuration files is as follows:
 * Everything after a '#' character is a comment
