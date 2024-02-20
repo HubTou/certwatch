@@ -139,5 +139,5 @@ However it should work through reverse proxies on the server side.
 
 ## SECURITY CONSIDERATIONS
 When certificate retrieval is unsuccessful, **certwatch** will try to diagnose the issue in different ways, one of which involving
-running the system **ping** command. This can be an issue if someone happens to place a command with the same name higher in your PATH.
+running the system **[ping](https://en.wikipedia.org/wiki/Ping_(networking_utility))** command. This can be an issue if someone happens to place a command with the same name higher in your PATH.
 But working at the IP layer level, which is needed in order to implement the [ICMP](https://en.wikipedia.org/wiki/Internet_Control_Message_Protocol) protocol, requires root privileges which I see as a bigger risk...
