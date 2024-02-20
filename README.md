@@ -28,7 +28,7 @@ certwatch - watch X509 certificates expiration dates
 \[--help|-?\]
 \[--version\]
 \[--\]
-file [file...]
+file [...]
 
 ## DESCRIPTION
 The **certwatch** utility monitors [X509 certificates](https://en.wikipedia.org/wiki/X.509) expiration dates

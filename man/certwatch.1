@@ -1,0 +1,194 @@
+.Dd February 20, 2024
+.Dt CERTWATCH 1
+.Os
+.Sh NAME
+.Nm certwatch
+.Nd watch X509 certificates expiration dates
+.Sh SYNOPSIS
+.Nm
+.Op Fl \-delay|\-d Ar SEC
+.Op Fl \-excel|\-e Ar FILE
+.Op Fl \-filter|\-f Ar DAYS
+.Op Fl \-ip|\-i
+.Op Fl \-new|\-n
+.Op Fl \-noaltnames|\-a
+.Op Fl \-noprogress|\-b
+.Op Fl \-savedir|\-s Ar DIR
+.Op Fl \-timeout|\-t Ar SEC
+.Op Fl \-debug
+.Op Fl \-help|\-?
+.Op Fl \-version
+.Op Fl \-
+.Ar file
+.Op Ar ...
+.Sh DESCRIPTION
+The
+.Nm
+utility monitors X509 certificates expiration dates
+by processing one or more data files containing lists of hostnames with optional port numbers.
+.Pp
+It's mainly used to check the expiration date of HTTPS certificates (which is the default target when the port number is not indicated),
+but the tool is protocol\-agnostic and can "talk" to any SNI\-aware (Server Name Information) SSL/TLS server (smtps, imaps, ldaps, etc.)
+without making too much assumptions on the correctness of servers certificates.
+.Pp
+The certificates can be saved to a specified directory with the
+.Op Fl \-savedir|\-s
+option for further analysis with other tools (such as OpenSSL).
+.Pp
+As it's intended to bulk process a lot of certificates, a progress bar is displayed (can be removed with the
+.Op Fl \-noprogress|\-b
+option) and the time allowed to get a certificate is limited to a 10 seconds timeout (can be specified otherwise with the
+.Op Fl \-timeout|\-t
+option).
+.Pp
+In order to avoid doing a Denial of Service attack on servers hosting many certificates, a 1 second delay is waited between each certificate request 
+(can be specified otherwise with the
+.Op Fl \-delay|\-d
+option).
+.Pp
+The tool results are presented as text tables.
+.Pp
+The main one is the list of certificates successfully fetched, ordered by expiration date.
+This list can be filtered with the
+.Op Fl \-filter|\-f
+option to only show certificates expired or expiring within the specified number of days.
+You can use the
+.Op Fl \-noaltnames|\-a
+option in order to stop displaying alternate names contained in certificates,
+or the
+.Op Fl \-ip|\-i
+option to include the IP addresses of servers.
+.Pp
+The second table is the sorted list of hostnames / hostports where certificates couldn't be fetched,
+with our best attempts to identify the reason why.
+.Pp
+Two additional tables can be generated with the
+.Op Fl \-new|\-n
+option, in order to print the common names and alternate names
+unmentioned in your input data files.
+.Pp
+Finally, for user convenience, all these reports can be generated in a single multi-tabs Excel workbook specified with the
+.Op Fl \-excel|\-e
+option.
+.Ss OPTIONS
+.Op Fl \-delay|\-d Ar SEC
+Wait SEC (0\-N) seconds between requests
+.Pp
+.Op Fl \-excel|\-e Ar FILE
+Output results in Excel FILE
+.Pp
+.Op Fl \-filter|\-f Ar DAYS
+Show results expiring in less than DAYS
+.Pp
+.Op Fl \-ip|\-i
+Show IP address of hostnames
+.Pp
+.Op Fl \-new|\-n
+Show unmentioned CN/alt names in input files
+.Pp
+.Op Fl \-noaltnames|\-a
+Don't show alt names in results
+.Pp
+.Op Fl \-noprogress|\-b
+Don't use a progress bar
+.Pp
+.Op Fl \-savedir|\-s Ar DIR
+Save certificates in DIR directory
+.Pp
+.Op Fl \-timeout|\-t Ar SEC
+Wait SEC (1\-N) seconds before aborting a request
+.Pp
+.Op Fl \-debug
+Enable debug mode
+.Pp
+.Op Fl \-help|\-?
+Print usage and this help message and exit
+.Pp
+.Op Fl \-version
+Print version and exit
+.Pp
+.Op Fl \-
+Options processing terminator
+.Sh ENVIRONMENT
+The
+.Ev CERTWATCH_DEBUG
+environment variable can be set to any value to enable debug mode.
+.Sh FILES
+.Pa /usr/local/share/certwatch/tests.txt
+\- config file example using the badssl.com Web site for testing live bogus X509 certificates
+.Pp
+The structure of configuration files is as follows:
+.Bl -bullet
+.It
+Everything after a '#' character is a comment
+.It
+Blank lines are allowed
+.It
+data lines are either:
+.Bl -bullet
+.It
+"hostname hostport"
+.It
+"hostname"
+.El
+.It
+When hostport is not provided, port 443 (HTTPS) is assumed
+.El
+.Sh EXIT STATUS
+.Ex -std COMMAND
+.Sh EXAMPLES
+The following command will make
+.Nm
+process your certificates list in
+.Pa mycertslist.txt ,
+save all certificates in PEM format to
+.Pa mycertsdir ,
+print all possible reports and details to screen and to an Excel workbook named
+.Pa certwatch.out.xlsx ,
+and select or highlight certificates expired or set to expire in the coming 30 days:
+.Bd -literal
+# certwatch \-in \-e certwatch.out.xlsx \-s mycertsdir \-f 30 mycertslist.txt | tee certwatch.out.txt
+.Ed
+.Pp
+Saved certificates can then be viewed with the
+.Em openssl
+command like this for a
+.Pa mycert.pem
+file:
+.Bd -literal
+# openssl x509 \-inform PEM \-in mycert.pem \-noout \-text | more
+.Ed
+.Sh SEE ALSO
+.Xr openssl 1
+.Sh STANDARDS
+The
+.Nm
+utility is not a standard UNIX command.
+.Pp
+It tries to follow the PEP 8 style guide for Python code.
+.Sh PORTABILITY
+To be tested under Windows.
+.Sh HISTORY
+This implementation was made for the
+.Lk https://github.com/HubTou/PNU PNU project
+.Pp
+Both for my own needs and those of my company, I wanted an easy way to monitor thousands of certificates expiration dates.
+.Pp
+The initial idea was to use the tool to send an email report of the certificates about to expire,
+but an Excel report in order to perform all kind of sorts and filtering was quickly necessary...
+.Sh LICENSE
+It is available under the 3\-clause BSD license.
+.Sh AUTHORS
+.An Hubert Tournier
+.Sh CAVEATS
+Using this command through outgoing proxies is untested and we provide no option to set the proxy address.
+However it should work through reverse proxies on the server side.
+.Sh SECURITY CONSIDERATIONS
+When certificate retrieval is unsuccessful,
+.Nm
+will try to diagnose the issue in different ways, one of which involving
+running the system
+.Em ping
+command. This can be an issue if someone happens to place a command with the same name higher in your PATH.
+But working at the IP layer level, which is needed in order to implement the ICMP protocol,
+requires root privileges which I see as a bigger risk...
