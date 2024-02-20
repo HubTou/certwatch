@@ -28,9 +28,38 @@ certwatch - watch certificates expiration dates
 \[--help|-?\]
 \[--version\]
 \[--\]
+file [file...]
 
 ## DESCRIPTION
-The **certwatch** utility... TODO
+The **certwatch** utility monitors X509 certificates expiration dates
+by processing one or more data files containing lists of hostnames with optional port numbers.
+
+It's mainly used to check the expiration date of HTTPS certificates (which is the default target when the port number is not indicated),
+but the tool is protocol-agnostic and can "talk" to any SSL/TLS server (smtps, imaps, ldaps, etc.) without making too much assumptions
+on the correctness of servers certificates.
+
+The certificates can be saved to a specified directory with the *--savedir|-s* option for further analysis with other tools.
+
+As it's intended to bulk process a lot of certificates, a progress bar is displayed (can be removed with the *--noprogress|-b* option)
+and the time allowed to get a certificate is limited to a 10 seconds timeout (can be specified otherwise with the *--timeout|-t* option).
+
+In order to avoid doing a Denial of Service attack on servers hosting many certificates, a 1 second delay is waited between each certificate request 
+(can be specified otherwise with the *--delay|-d* option).
+
+The tool results are presented as text tables.
+
+The main one is the list of certificates successfully fetched, ordered by expiration date.
+This list can be filtered with the *--filter|-f* option to only show certificates expiring in the specified number of days.
+You can use the *--noaltnames|-a* option in order to stop displaying alternate names contained in certificates,
+or the *--ip|-i* option to include the IP addresses of servers.
+
+The second table is the sorted list of hostnames / hostports where certificates couldn't be fetched,
+with several attempts to identify the reason why.
+
+Two additional tables can be generated with the *--new|-n* option, in order to print the common names and alternate names
+unmentioned in your input data files.
+
+Finally, for user convenience, all these reports can be generated in a single multi-tabs Excel workbook specified with the *--excel|-e* option.
 
 ### OPTIONS
 Options | Use
@@ -62,8 +91,7 @@ The **certwatch** utility exits 0 on success, and >0 if an error occurs.
 The following command will make **certwatch** process your certificates list in *mycertslist.txt*,
 save all certificates in PEM format to *mycertsdir*, print all possible reports and details to screen
 and to an Excel workbook named *certwatch.out.xlsx*, and select or highlight certificates
-expired or set to expire in the coming 30 days.
-
+expired or set to expire in the coming 30 days:
 ```Shell
 # certwatch -in -e certwatch.out.xlsx -s mycertsdir -f 30 mycertslist.txt | tee certwatch.out.txt
 ```
@@ -86,6 +114,10 @@ To be tested under Windows.
 
 ## HISTORY
 This implementation was made for the [PNU project](https://github.com/HubTou/PNU).
+
+Both for my own needs and those of my company, I wanted an easy way to monitor thousands of certificates expiration dates.
+
+The initial idea was to use the tool to send an email report of the certificates about to expire, but an Excel report in order to perform all kind of sorts and filtering was quickly necessary...
 
 ## LICENSE
 It is available under the [3-clause BSD license](https://opensource.org/licenses/BSD-3-Clause).
