@@ -1,4 +1,4 @@
-.Dd February 20, 2024
+.Dd February 21, 2024
 .Dt CERTWATCH 1
 .Os
 .Sh NAME
@@ -39,7 +39,7 @@ As it's intended to bulk process a lot of certificates, a progress bar is displa
 .Op Fl \-noprogress|\-b
 option) and the time allowed to get a certificate is limited to a 10 seconds timeout (can be specified otherwise with the
 .Op Fl \-timeout|\-t
-option).
+option, but is not supported on Windows systems).
 .Pp
 In order to avoid doing a Denial of Service attack on servers hosting many certificates, a 1 second delay is waited between each certificate request 
 (can be specified otherwise with the
@@ -115,7 +115,7 @@ The
 environment variable can be set to any value to enable debug mode.
 .Sh FILES
 .Pa /usr/local/share/certwatch/tests.txt
-\- config file example using the badssl.com Web site for testing live bogus X509 certificates
+\- config file example using the badssl.com Web site for testing live bogus X509 certificates.
 .Pp
 The structure of configuration files is as follows:
 .Bl -bullet
@@ -167,7 +167,7 @@ utility is not a standard UNIX command.
 .Pp
 It tries to follow the PEP 8 style guide for Python code.
 .Sh PORTABILITY
-To be tested under Windows.
+Tested OK under Windows.
 .Sh HISTORY
 This implementation was made for the
 .Lk https://github.com/HubTou/PNU PNU project

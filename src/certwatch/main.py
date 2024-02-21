@@ -15,7 +15,7 @@ from .library import read_input_file, get_input_data, get_certs, print_table, ge
                      get_new_names, print_new_names, update_excel
 
 # Version string used by the what(1) and ident(1) commands:
-ID = "@(#) $Id: certwatch - watch X509 certificates expiration dates v1.0.0 (February 20, 2024) by Hubert Tournier $"
+ID = "@(#) $Id: certwatch - watch X509 certificates expiration dates v1.0.2 (February 21, 2024) by Hubert Tournier $"
 
 # Default parameters. Can be overcome by environment variables, then command line options
 parameters = {
@@ -137,6 +137,9 @@ def _process_command_line():
                 sys.exit(1)
 
         elif option in ("--excel", "-e"):
+            if not argument.endswith(".xlsx"):
+                logging.critical("--excel|-e parameter must use a .xlsx extension")
+                sys.exit(1)
             parameters["Excel filename"] = argument
 
         elif option in ("--filter", "-f"):

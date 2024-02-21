@@ -279,8 +279,9 @@ def _is_pingable(hostname):
 def _is_listening(hostname, hostport, timeout=10):
     """ Attempts a connection on the given port and reports if it's open or not """
     sock = socket.socket()
-    signal.signal(signal.SIGALRM, _timeout_signal_handler)
-    signal.alarm(timeout)
+    if platform.system().lower() != "windows":
+        signal.signal(signal.SIGALRM, _timeout_signal_handler)
+        signal.alarm(timeout)
     try:
         sock.connect((hostname, hostport))
         sock.close()
@@ -288,7 +289,8 @@ def _is_listening(hostname, hostport, timeout=10):
     except socket.error:
         listening = False
     finally:
-        signal.alarm(0)
+        if platform.system().lower() != "windows":
+            signal.alarm(0)
 
     return listening
 
@@ -333,7 +335,8 @@ def get_certs(input_data, progress_bar=True, delay=1, timeout=10, save_cert_dir=
     """ Return dictionaries of certificates fetched and errors encountered """
     certs = {}
     errors = {}
-    signal.signal(signal.SIGALRM, _timeout_signal_handler)
+    if platform.system().lower() != "windows":
+        signal.signal(signal.SIGALRM, _timeout_signal_handler)
     if progress_bar:
         for i in tqdm.tqdm(range(len(input_data))):
             hostname = input_data[i][0]
@@ -347,14 +350,17 @@ def get_certs(input_data, progress_bar=True, delay=1, timeout=10, save_cert_dir=
                 error_message = str(error)
 
             if ip_address:
-                signal.alarm(timeout)
+                if platform.system().lower() != "windows":
+                    signal.alarm(timeout)
                 try:
                     cert = _get_cert(hostname, hostport, save_cert_dir)
                 except (NameError, TimeoutError, ConnectionError) as error:
-                    signal.alarm(0)
+                    if platform.system().lower() != "windows":
+                        signal.alarm(0)
                     errors[hostname + ":" + str(hostport)] = _analyze_error(hostname, hostport, ip_address, str(error), type(error).__name__)
                     continue
-                signal.alarm(0)
+                if platform.system().lower() != "windows":
+                    signal.alarm(0)
 
                 cert["IP"] = ip_address
                 certs[hostname + ":" + str(hostport)] = cert
@@ -376,14 +382,17 @@ def get_certs(input_data, progress_bar=True, delay=1, timeout=10, save_cert_dir=
                 error_message = str(error)
 
             if ip_address:
-                signal.alarm(timeout)
+                if platform.system().lower() != "windows":
+                    signal.alarm(timeout)
                 try:
                     cert = _get_cert(hostname, hostport, save_cert_dir)
                 except (NameError, TimeoutError, ConnectionError) as error:
-                    signal.alarm(0)
+                    if platform.system().lower() != "windows":
+                        signal.alarm(0)
                     errors[hostname + ":" + str(hostport)] = _analyze_error(hostname, hostport, ip_address, str(error), type(error).__name__)
                     continue
-                signal.alarm(0)
+                if platform.system().lower() != "windows":
+                    signal.alarm(0)
 
                 cert["IP"] = ip_address
                 certs[hostname + ":" + str(hostport)] = cert

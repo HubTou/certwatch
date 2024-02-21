@@ -1,0 +1,62 @@
+
+Certificates expiration dates: (showing all 11)
+┌────────────────────────────────────┬────────────────┬────────────────────┬───────────────────────┬───────────────────┬───────────────────────────┐
+│ hostname:port                      │ IP address     │ common name        │ alt names             │ issuer org name   │ not valid after           │
+├────────────────────────────────────┼────────────────┼────────────────────┼───────────────────────┼───────────────────┼───────────────────────────┤
+│ expired.badssl.com:443             │ 104.154.89.105 │ *.badssl.com       │ *.badssl.com          │ COMODO CA Limited │ 2015-04-12 23:59:59+00:00 │
+│                                    │                │                    │ badssl.com            │                   │                           │
+│                                    │                │                    │                       │                   │                           │
+│ no-subject.badssl.com:443          │ 104.154.89.105 │                    │ no-subject.badssl.com │ COMODO CA Limited │ 2020-06-16 23:59:59+00:00 │
+│                                    │                │                    │                       │                   │                           │
+│ incomplete-chain.badssl.com:443    │ 104.154.89.105 │ *.badssl.com       │ *.badssl.com          │ DigiCert Inc      │ 2022-05-17 12:00:00+00:00 │
+│                                    │                │                    │ badssl.com            │                   │                           │
+│                                    │                │                    │                       │                   │                           │
+│ revoked.badssl.com:443             │ 104.154.89.105 │ revoked.badssl.com │ revoked.badssl.com    │ DigiCert Inc      │ 2022-10-27 23:59:59+00:00 │
+│                                    │                │                    │                       │                   │                           │
+│ client-cert-missing.badssl.com:443 │ 104.154.89.105 │ *.badssl.com       │ *.badssl.com          │ Let's Encrypt     │ 2024-02-27 21:30:03+00:00 │
+│                                    │                │                    │ badssl.com            │                   │                           │
+│                                    │                │                    │                       │                   │                           │
+│ pinning-test.badssl.com:443        │ 104.154.89.105 │ *.badssl.com       │ *.badssl.com          │ Let's Encrypt     │ 2024-02-27 21:30:03+00:00 │
+│                                    │                │                    │ badssl.com            │                   │                           │
+│                                    │                │                    │                       │                   │                           │
+│ wrong.host.badssl.com:443          │ 104.154.89.105 │ *.badssl.com       │ *.badssl.com          │ Let's Encrypt     │ 2024-02-27 21:30:03+00:00 │
+│                                    │                │                    │ badssl.com            │                   │                           │
+│                                    │                │                    │                       │                   │                           │
+│ github.com:443                     │ 140.82.121.4   │ github.com         │ github.com            │ DigiCert Inc      │ 2024-03-14 23:59:59+00:00 │
+│                                    │                │                    │ www.github.com        │                   │                           │
+│                                    │                │                    │                       │                   │                           │
+│ no-sct.badssl.com:443              │ 104.154.89.105 │ no-sct.badssl.com  │ no-sct.badssl.com     │ DigiCert Inc      │ 2024-11-26 23:59:59+00:00 │
+│                                    │                │                    │ www.no-sct.badssl.com │                   │                           │
+│                                    │                │                    │                       │                   │                           │
+│ self-signed.badssl.com:443         │ 104.154.89.105 │ *.badssl.com       │ *.badssl.com          │ BadSSL            │ 2025-11-28 22:34:04+00:00 │
+│                                    │                │                    │ badssl.com            │                   │                           │
+│                                    │                │                    │                       │                   │                           │
+│ untrusted-root.badssl.com:443      │ 104.154.89.105 │ *.badssl.com       │ *.badssl.com          │ BadSSL            │ 2025-11-28 22:34:04+00:00 │
+│                                    │                │                    │ badssl.com            │                   │                           │
+│                                    │                │                    │                       │                   │                           │
+└────────────────────────────────────┴────────────────┴────────────────────┴───────────────────────┴───────────────────┴───────────────────────────┘
+
+Server errors: (showing all 3)
+┌───────────────────────────┬────────────────┬──────────────┬──────┬───────────────┬───────────────────────────────┬───────────────────────┐
+│ hostname                  │ IP address     │ is pingable? │ port │ is listening? │ error type                    │ is listening on http? │
+├───────────────────────────┼────────────────┼──────────────┼──────┼───────────────┼───────────────────────────────┼───────────────────────┤
+│ no-common-name.badssl.com │ 104.154.89.105 │ NO           │ 443  │ YES           │ Connection failed             │ YES                   │
+│ nonexistent.com           │                │ N/A          │ 443  │ N/A           │ Name does not resolve         │ N/A                   │
+│ null.badssl.com           │ 104.154.89.105 │ NO           │ 443  │ NO            │ sslv3 alert handshake failure │ YES                   │
+└───────────────────────────┴────────────────┴──────────────┴──────┴───────────────┴───────────────────────────────┴───────────────────────┘
+
+Common names unmentioned in your input files:
+┌──────────────┐
+│ common name  │
+├──────────────┤
+│ *.badssl.com │
+└──────────────┘
+
+Alt names unmentioned in your input files:
+┌───────────────────────┐
+│ alt name              │
+├───────────────────────┤
+│ www.github.com        │
+│ badssl.com            │
+│ www.no-sct.badssl.com │
+└───────────────────────┘

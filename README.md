@@ -34,17 +34,20 @@ file [...]
 The **certwatch** utility monitors [X509 certificates](https://en.wikipedia.org/wiki/X.509) expiration dates
 by processing one or more data files containing lists of hostnames with optional port numbers.
 
-It's mainly used to check the expiration date of [HTTPS](https://en.wikipedia.org/wiki/HTTPS) certificates (which is the default target when the port number is not indicated),
-but the tool is protocol-agnostic and can "talk" to any SNI-aware ([Server Name Information](https://en.wikipedia.org/wiki/Server_Name_Indication)) [SSL/TLS](https://en.wikipedia.org/wiki/Transport_Layer_Security) server (smtps, imaps, ldaps, etc.)
+It's mainly used to check the expiration date of [HTTPS](https://en.wikipedia.org/wiki/HTTPS) certificates
+(which is the default target when the port number is not indicated),
+but the tool is protocol-agnostic and can "talk" to any SNI-aware ([Server Name Information](https://en.wikipedia.org/wiki/Server_Name_Indication))
+[SSL/TLS](https://en.wikipedia.org/wiki/Transport_Layer_Security) server (smtps, imaps, ldaps, etc.)
 without making too much assumptions on the correctness of servers certificates.
 
 The certificates can be saved to a specified directory with the *--savedir|-s* option for further analysis with other tools (such as [OpenSSL](https://www.openssl.org/)).
 
 As it's intended to bulk process a lot of certificates, a progress bar is displayed (can be removed with the *--noprogress|-b* option)
-and the time allowed to get a certificate is limited to a 10 seconds timeout (can be specified otherwise with the *--timeout|-t* option).
+and the time allowed to get a certificate is limited to a 10 seconds timeout
+(can be specified otherwise with the *--timeout|-t* option, but is not supported on Windows systems).
 
-In order to avoid doing a [Denial of Service attack](https://en.wikipedia.org/wiki/Denial-of-service_attack) on servers hosting many certificates, a 1 second delay is waited between each certificate request 
-(can be specified otherwise with the *--delay|-d* option).
+In order to avoid doing a [Denial of Service attack](https://en.wikipedia.org/wiki/Denial-of-service_attack) on servers hosting many certificates,
+a 1 second delay is waited between each certificate request (can be specified otherwise with the *--delay|-d* option).
 
 The tool results are presented as text tables.
 
@@ -82,7 +85,9 @@ Options | Use
 The CERTWATCH_DEBUG environment variable can be set to any value to enable debug mode.
 
 ## FILES
-[/usr/local/share/certwatch/tests.txt](https://github.com/HubTou/certwatch/blob/main/data/tests.txt) - config file example using the [badssl.com](https://badssl.com) Web site for testing live bogus X509 certificates
+[/usr/local/share/certwatch/tests.txt](https://github.com/HubTou/certwatch/blob/main/data/tests.txt) - config file example using the [badssl.com](https://badssl.com) Web site for testing live bogus X509 certificates,
+with [text](https://github.com/HubTou/certwatch/blob/main/data/tests_output.txt)
+and [Excel](https://github.com/HubTou/certwatch/blob/main/data/tests_output.xlsx) output.
 
 The structure of configuration files is as follows:
 * Everything after a '#' character is a comment
@@ -118,7 +123,7 @@ The **certwatch** utility is not a standard UNIX command.
 It tries to follow the [PEP 8](https://www.python.org/dev/peps/pep-0008/) style guide for [Python](https://www.python.org/) code.
 
 ## PORTABILITY
-To be tested under Windows.
+Tested OK under Windows.
 
 ## HISTORY
 This implementation was made for the [PNU project](https://github.com/HubTou/PNU).
