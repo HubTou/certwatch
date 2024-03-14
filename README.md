@@ -13,7 +13,7 @@ pip install pytnix
 ## NAME
 certwatch - watch X509 certificates expiration dates
 
-[![Servier Inspired](https://raw.githubusercontent.com/RomualdRousseau/ServierHub/main/badges/inspired.svg)](https://servier.com/)
+[![Servier Inspired](https://raw.githubusercontent.com/RomualdRousseau/ServierHub/main/badges/inspired.svg)](https://github.com/ServierHub)
 
 ## SYNOPSIS
 **certwatch**
