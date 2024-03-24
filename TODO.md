@@ -1,4 +1,5 @@
 # certwatch TODOLIST
+Feel free to submit your own ideas!
 
 ## Probable evolutions
 * Providing results in some machine oriented format (csv, json, etc.)

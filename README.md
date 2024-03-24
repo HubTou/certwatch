@@ -1,3 +1,7 @@
+[![Servier Inspired](https://raw.githubusercontent.com/servierhub/.github/main/badges/inspired.svg)](https://github.com/ServierHub/)
+[![PyPI package](https://repology.org/badge/version-for-repo/pypi/python:pnu-certwatch.svg)](https://repology.org/project/python:pnu-certwatch/versions)
+[![FreeBSD port](https://repology.org/badge/version-for-repo/freebsd/python:pnu-certwatch.svg)](https://repology.org/project/python:pnu-certwatch/versions)
+
 # Installation
 Once you have installed [Python](https://www.python.org/downloads/) and its packages manager [pip](https://pip.pypa.io/en/stable/installation/),
 use one of the following commands, depending on if you want only this tool, the full set of PNU tools, or PNU plus a selection of additional third-parties tools:
@@ -11,9 +15,7 @@ pip install pytnix
 # CERTWATCH(1)
 
 ## NAME
-certwatch - watch X509 certificates expiration dates
-
-[![Servier Inspired](https://raw.githubusercontent.com/servierhub/.github/main/badges/inspired.svg)](https://github.com/ServierHub/)
+certwatch - Watch X509 certificates expiration dates
 
 ## SYNOPSIS
 **certwatch**
@@ -126,6 +128,8 @@ It tries to follow the [PEP 8](https://www.python.org/dev/peps/pep-0008/) style 
 
 ## PORTABILITY
 Tested OK under Windows.
+
+Packaged for FreeBSD as pyXX-pnu-certwatch.
 
 ## HISTORY
 This implementation was made for the [PNU project](https://github.com/HubTou/PNU).
